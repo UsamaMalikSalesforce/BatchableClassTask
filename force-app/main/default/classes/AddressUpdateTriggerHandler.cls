@@ -7,8 +7,11 @@ public with sharing class AddressUpdateTriggerHandler {
             for (Account item : newAccounts) {
                 if(oldAccount.get(item.Id).Address__c != item.Address__c)
                 {
-                    BatchClassService obj = new BatchClassService(item.Id,item.Address__c);
-                    Id batchJobId = Database.executeBatch(obj,100);
+                   // BatchClassService obj = new BatchClassService(item.Id,item.Address__c);
+                   // Id batchJobId = Database.executeBatch(obj,100);
+
+                   QueableClassService qcs = new QueableClassService(item.Id,item.Address__c);
+                   Id batchJobId = System.enqueueJob(qcs);
                     System.debug('Custom Log Job Id: ' + batchJobId);
                 }
             }
