@@ -10,6 +10,7 @@ global with sharing class BatchClassService implements Database.Batchable<SObjec
 
     global Database.QueryLocator start(Database.BatchableContext BC)
     {
+        //change
         System.debug('Account Id: ' + AccountId);
         System.debug('start Scope');
        // string query = 'Select Id,Name,Address__c from Contact where AccountId=' + AccountId;
