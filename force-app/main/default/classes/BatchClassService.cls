@@ -2,22 +2,18 @@ global with sharing class BatchClassService implements Database.Batchable<SObjec
     
     public Id AccountId {get;set;}
     public string AccountAddress {get;set;}
-    global BatchClassService(Id AccountId, String AccountAddress)
+    public List<Contact> contacts;
+   
+    global BatchClassService(List<Contact> conList, string acAddress)
     {
-        this.AccountId = AccountId;
-        this.AccountAddress = AccountAddress;
+        this.AccountAddress = acAddress;
+        this.contacts = conList;
     }
 
-    global Database.QueryLocator start(Database.BatchableContext BC)
+    global Iterable<SObject> start(Database.BatchableContext BC)
     {
-        //change
-        System.debug('Account Id: ' + AccountId);
         System.debug('start Scope');
-       // string query = 'Select Id,Name,Address__c from Contact where AccountId=' + AccountId;
-        System.debug('end Scope');
-        return Database.getQueryLocator([Select Id,Name,Address__c from Contact where AccountId =: AccountId]);
-       
-        
+        return contacts;
     }
     global void execute(Database.BatchableContext BC, List<Contact> scope)
     {
